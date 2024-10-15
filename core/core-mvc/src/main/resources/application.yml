@@ -1,0 +1,21 @@
+core-mvc:
+  enabled: true
+  features:
+    all: true
+#    global-controller: true
+#    log-trace-aop: true
+#    secured-ip-aop: true
+#    content-caching-filter: true
+#    trace-key-filter: true
+#    log-interceptor: true
+
+
+
+# =====================================================================================================================
+# logging
+# =====================================================================================================================
+logging:
+  group:
+    core-mvc: "io.glory.coremvc"
+  level:
+    core-mvc: info

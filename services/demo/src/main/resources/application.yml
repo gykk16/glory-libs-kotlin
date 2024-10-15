@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: demo
+    version: ${version}
+
+  profiles:
+    default: local
+
+core-mvc:
+  enabled: true
+  features:
+    all: true
+#    global-controller: true
+#    log-trace-aop: true
+#    secured-ip-aop: true
+#    content-caching-filter: true
+#    trace-key-filter: true
+#    log-interceptor: true
+
+# =====================================================================================================================
+# logging
+# =====================================================================================================================
+logging:
+  group:
+    core-mvc: "io.glory.coremvc"
+  level:
+    core-mvc: debug
+  structured:
+    format:
+      console: ecs
+#    ecs:
+#      service:
+#        name: MyService
+#        environment: Production
+#        node-name: Primary
+#        version: 1
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %clr(%5.5p) [%15.15t] [%clr(%-36.36X{X-Trace-Id}){magenta}] --- %clr(%-40.40logger{39}){cyan} : %m%n%throwable"
+
+  charset:
+    file: UTF-8
+    console: UTF-8
