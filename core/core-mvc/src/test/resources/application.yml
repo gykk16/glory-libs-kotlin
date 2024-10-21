@@ -24,8 +24,21 @@ spring:
         jdbc:
           batch_size: 500
         query:
-#          mutation_strategy: org.hibernate.query.sqm.mutation.internal.inline.InlineMutationStrategy
+    #          mutation_strategy: org.hibernate.query.sqm.mutation.internal.inline.InlineMutationStrategy
     generate-ddl: true
+
+core-mvc:
+  enabled: true
+  features:
+    all: true
+  caffeine:
+    cache-policy-map:
+      main:
+        max-size: 10
+        expire-after-access: 5m
+      blackListIps:
+        max-size: 15
+        expire-after-access: 1d
 
 logging:
   group:

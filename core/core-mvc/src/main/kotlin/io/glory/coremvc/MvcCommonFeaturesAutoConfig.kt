@@ -1,6 +1,7 @@
 package io.glory.coremvc
 
 import io.github.oshai.kotlinlogging.KotlinLogging
+import io.glory.coremvc.cache.CaffeineProperties
 import io.glory.coremvc.filter.TsidProperties
 import org.springframework.boot.autoconfigure.AutoConfiguration
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
@@ -15,7 +16,10 @@ private val logger = KotlinLogging.logger {}
     havingValue = "true"
 )
 @ComponentScan("io.glory.coremvc")
-@EnableConfigurationProperties(TsidProperties::class)
+@EnableConfigurationProperties(
+    TsidProperties::class,
+    CaffeineProperties::class
+)
 class MvcCommonFeaturesAutoConfig {
 
     init {

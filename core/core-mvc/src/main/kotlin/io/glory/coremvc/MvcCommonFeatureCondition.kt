@@ -7,6 +7,7 @@ import org.springframework.core.type.AnnotatedTypeMetadata
 
 class MvcCommonFeatureCondition : SpringBootCondition() {
 
+    @Suppress("UNCHECKED_CAST")
     override fun getMatchOutcome(context: ConditionContext, metadata: AnnotatedTypeMetadata): ConditionOutcome {
 
         val env = context.environment

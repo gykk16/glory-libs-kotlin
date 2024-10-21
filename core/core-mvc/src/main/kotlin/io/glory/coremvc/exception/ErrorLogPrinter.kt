@@ -41,7 +41,7 @@ object ErrorLogPrinter {
     }
 
     /**
-     * get root cause
+     * @return root cause of exception
      */
     private tailrec fun getRootCause(throwable: Throwable): Throwable {
         val cause = throwable.cause

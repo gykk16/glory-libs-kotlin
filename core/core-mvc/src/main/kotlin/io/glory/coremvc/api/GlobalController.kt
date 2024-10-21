@@ -5,9 +5,7 @@ import io.glory.core.util.idgenerator.TsidGenerator
 import io.glory.coremvc.ConditionalOnFeature
 import io.glory.coremvc.MvcCommonFeature.GLOBAL_CONTROLLER
 import io.glory.coremvc.annotation.LogTrace
-import io.glory.coremvc.response.ApiResponse
-import io.glory.coremvc.response.SuccessCode.CREATED
-import io.glory.coremvc.response.SuccessCode.SUCCESS
+import io.glory.coremvc.response.v2.ApiResource
 import org.springframework.core.env.Environment
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -39,11 +37,11 @@ class GlobalController(
 
     @GetMapping("/trace-key")
     @LogTrace
-    fun traceKey(): ResponseEntity<ApiResponse> = ApiResponse.of(CREATED, idGenerator.generate())
+    fun traceKey(): ResponseEntity<ApiResource> = ApiResource.of(idGenerator.generate())
 
     @GetMapping("/trace-key/{traceKey}")
     @LogTrace
-    fun parseTraceKey(@PathVariable traceKey: Long): ResponseEntity<ApiResponse> {
+    fun parseTraceKey(@PathVariable traceKey: Long): ResponseEntity<ApiResource> {
         val parsed = TsidGenerator.parse(traceKey)
         val generatedAt = TsidGenerator.generatedAt(traceKey)
         logger.info { "==> parsed.contentToString() = ${parsed.contentToString()} " }
@@ -56,7 +54,7 @@ class GlobalController(
             "sequence" to parsed[3],
             "generatedAt" to generatedAt
         )
-        return ApiResponse.of(SUCCESS, result)
+        return ApiResource.of(result)
     }
 
 }

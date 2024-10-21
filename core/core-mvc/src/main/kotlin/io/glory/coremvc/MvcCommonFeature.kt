@@ -43,4 +43,9 @@ enum class MvcCommonFeature(
      * @see io.glory.coremvc.aop.securedip.SecuredIpAspect
      */
     SECURED_IP_AOP("secured-ip-aop"),
+
+    /**
+     * @see io.glory.coremvc.cache.CaffeineConfig
+     */
+    CAFFEINE_CACHE("caffeine-cache"),
 }

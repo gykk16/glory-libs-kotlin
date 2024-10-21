@@ -38,13 +38,17 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-aop")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+
+    implementation("org.springframework.boot:spring-boot-starter-cache")
+
     implementation("org.springframework.data:spring-data-commons")
     implementation("org.springframework:spring-tx")
 
-
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
-    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+    // caffeine :: cache
+    implementation("com.github.ben-manes.caffeine:caffeine")
 
     testImplementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
@@ -53,6 +57,8 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
     testImplementation("com.h2database:h2")
+
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
     // lombok
     implementation("org.projectlombok:lombok")

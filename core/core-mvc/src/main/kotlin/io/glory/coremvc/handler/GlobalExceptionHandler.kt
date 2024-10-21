@@ -1,26 +1,20 @@
 package io.glory.coremvc.handler
 
 import io.github.oshai.kotlinlogging.KotlinLogging
+import io.glory.core.codes.ErrorCode
 import io.glory.core.codes.ResponseCode
-import io.glory.coremvc.ConditionalOnFeature
-import io.glory.coremvc.MvcCommonFeature
-import io.glory.coremvc.MvcCommonFeature.*
 import io.glory.coremvc.exception.BizException
 import io.glory.coremvc.exception.BizRuntimeException
 import io.glory.coremvc.exception.ErrorLogPrinter.logError
-import io.glory.coremvc.response.ApiResponse
-import io.glory.coremvc.response.ApiResponse.Companion.of
-import io.glory.coremvc.response.ErrorCode
+import io.glory.coremvc.response.v1.ApiResponse
+import io.glory.coremvc.response.v2.ApiResource
 import jakarta.servlet.http.HttpServletRequest
-import org.springframework.core.Ordered
-import org.springframework.core.annotation.Order
 import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.validation.FieldError
 import org.springframework.web.HttpRequestMethodNotSupportedException
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
-import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.method.annotation.HandlerMethodValidationException
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException
 import org.springframework.web.servlet.resource.NoResourceFoundException
@@ -33,9 +27,9 @@ private val logger = KotlinLogging.logger {}
  * @see BizRuntimeException
  * @see BizException
  */
-@RestControllerAdvice
-@ConditionalOnFeature(features = [GLOBAL_EXCEPTION_HANDLER])
-@Order(Ordered.LOWEST_PRECEDENCE)
+//@RestControllerAdvice
+//@ConditionalOnFeature(features = [GLOBAL_EXCEPTION_HANDLER])
+//@Order(Ordered.LOWEST_PRECEDENCE)
 class GlobalExceptionHandler {
 
     init {
@@ -162,8 +156,20 @@ class GlobalExceptionHandler {
             data: Any = e.message ?: code.message
         ): ResponseEntity<ApiResponse> {
             logError(request, code, e, printStackTrace)
-            return of(code, data)
+            return ApiResponse.of(code, data)
         }
+
+        fun createApiResource(
+            request: HttpServletRequest,
+            code: ResponseCode,
+            e: Exception,
+            printStackTrace: Boolean = false,
+            data: Any = e.message ?: code.message
+        ): ResponseEntity<ApiResource> {
+            logError(request, code, e, printStackTrace)
+            return ApiResource.of(code, data)
+        }
+
     }
 
 }

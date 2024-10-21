@@ -1,7 +1,7 @@
 package io.glory.coremvc.aop.securedip
 
+import io.glory.core.codes.ErrorCode
 import io.glory.coremvc.exception.BizRuntimeException
-import io.glory.coremvc.response.ErrorCode
 
 class SecuredIpException(
     clientIp: String,

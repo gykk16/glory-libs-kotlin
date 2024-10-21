@@ -4,6 +4,7 @@ import io.glory.core.util.idgenerator.TsidGenerator
 import io.glory.coremvc.ConditionalOnFeature
 import io.glory.coremvc.MvcCommonFeature.CONTENT_CACHING_FILTER
 import io.glory.coremvc.MvcCommonFeature.TRACE_KEY_FILTER
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
@@ -23,7 +24,7 @@ class FilterConfig {
     }
 
     @Bean
-    @ConditionalOnFeature(features = [TRACE_KEY_FILTER])
+    @ConditionalOnMissingBean
     fun idGenerator(properties: TsidProperties): TsidGenerator {
         return TsidGenerator(properties.workerId, properties.processId)
     }

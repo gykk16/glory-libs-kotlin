@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import io.glory.coremvc.response.v1.CollectionResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +26,7 @@ class CollectionResponseJTest {
         assertThat(response).isNotNull()
                 .extracting(
                         CollectionResponse::getContent,
-                        CollectionResponse::getTotalCount
+                        CollectionResponse::getSize
                 )
                 .containsExactly(
                         content,
@@ -47,7 +48,7 @@ class CollectionResponseJTest {
         assertThat(response).isNotNull()
                 .extracting(
                         CollectionResponse::getContent,
-                        CollectionResponse::getTotalCount
+                        CollectionResponse::getSize
                 )
                 .containsExactly(
                         content,
@@ -69,7 +70,7 @@ class CollectionResponseJTest {
         assertThat(response).isNotNull()
                 .extracting(
                         CollectionResponse::getContent,
-                        CollectionResponse::getTotalCount
+                        CollectionResponse::getSize
                 )
                 .containsExactly(
                         content,

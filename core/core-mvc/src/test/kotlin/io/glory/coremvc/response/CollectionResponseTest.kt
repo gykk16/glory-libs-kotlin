@@ -1,5 +1,6 @@
 package io.glory.coremvc.response
 
+import io.glory.coremvc.response.v1.CollectionResponse
 import org.assertj.core.api.Assertions.assertThat
 import kotlin.test.Test
 
@@ -14,7 +15,7 @@ class CollectionResponseTest {
         val response = CollectionResponse(list)
 
         // then
-        assertThat(response.totalCount).isEqualTo(list.size)
+        assertThat(response.size).isEqualTo(list.size)
         assertThat(response.content).isEqualTo(list)
     }
 
@@ -27,7 +28,7 @@ class CollectionResponseTest {
         val response = CollectionResponse(set)
 
         // then
-        assertThat(response.totalCount).isEqualTo(set.size)
+        assertThat(response.size).isEqualTo(set.size)
         assertThat(response.content).isEqualTo(set)
     }
 
@@ -40,7 +41,7 @@ class CollectionResponseTest {
         val response = CollectionResponse(map)
 
         // then
-        assertThat(response.totalCount).isEqualTo(map.size)
+        assertThat(response.size).isEqualTo(map.size)
         assertThat(response.content).isEqualTo(map)
     }
 

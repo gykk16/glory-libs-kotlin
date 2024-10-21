@@ -10,12 +10,19 @@ core-mvc:
   enabled: true
   features:
     all: true
-#    global-controller: true
-#    log-trace-aop: true
-#    secured-ip-aop: true
-#    content-caching-filter: true
-#    trace-key-filter: true
-#    log-interceptor: true
+  #    global-controller: true
+  #    log-trace-aop: true
+  #    secured-ip-aop: true
+  #    content-caching-filter: true
+  #    trace-key-filter: true
+  #    log-interceptor: true
+  #    caffeine-cache: true
+
+  caffeine:
+    cache-policy-map:
+      main:
+        max-size: 10
+        expire-after-access: 1m
 
 # =====================================================================================================================
 # logging
@@ -28,15 +35,41 @@ logging:
   structured:
     format:
       console: ecs
-#    ecs:
-#      service:
-#        name: MyService
-#        environment: Production
-#        node-name: Primary
-#        version: 1
+  #    ecs:
+  #      service:
+  #        name: MyService
+  #        environment: Production
+  #        node-name: Primary
+  #        version: 1
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %clr(%5.5p) [%15.15t] [%clr(%-36.36X{X-Trace-Id}){magenta}] --- %clr(%-40.40logger{39}){cyan} : %m%n%throwable"
 
   charset:
     file: UTF-8
     console: UTF-8
+
+# =====================================================================================================================
+# server
+# =====================================================================================================================
+server:
+  tomcat:
+    mbeanregistry:
+      enabled: true
+  #    threads:
+  #      max: 500
+  #    remoteip:
+  #      remote-ip-header: x-forwarded-for
+  #    accesslog:
+  #      pattern: "%{X-Forwarded-For}i %h %l %u %t \"%r\" %s %b"
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
+  shutdown: graceful
+  error:
+    include-binding-errors: never
+    include-message: never
+    include-stacktrace: never
+    include-exception: false
+    whitelabel:
+      enabled: false

@@ -2,14 +2,18 @@ core-mvc:
   enabled: true
   features:
     all: true
-#    global-controller: true
-#    log-trace-aop: true
-#    secured-ip-aop: true
-#    content-caching-filter: true
-#    trace-key-filter: true
-#    log-interceptor: true
-
-
+  #    global-controller: true
+  #    log-trace-aop: true
+  #    secured-ip-aop: true
+  #    content-caching-filter: true
+  #    trace-key-filter: true
+  #    log-interceptor: true
+  #    caffeine-cache: true
+  caffeine:
+    cache-policy-map:
+      main:
+        max-size: 10
+        expire-after-access: 5m
 
 # =====================================================================================================================
 # logging
@@ -19,3 +23,27 @@ logging:
     core-mvc: "io.glory.coremvc"
   level:
     core-mvc: info
+
+# =====================================================================================================================
+# server
+# =====================================================================================================================
+server:
+  tomcat:
+    mbeanregistry:
+      enabled: true
+  #    threads:
+  #      max: 500
+  #    remoteip:
+  #      remote-ip-header: x-forwarded-for
+  #    accesslog:
+  #      pattern: "%{X-Forwarded-For}i %h %l %u %t \"%r\" %s %b"
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
+  shutdown: graceful
+  error:
+    include-binding-errors: never
+    include-message: never
+    include-stacktrace: never
+    include-exception: false
