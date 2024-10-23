@@ -1,3 +1,5 @@
+@file:JvmName("StringExt")
+
 package io.glory.core.util.extensions
 
 private const val MASK_STAR = "*"

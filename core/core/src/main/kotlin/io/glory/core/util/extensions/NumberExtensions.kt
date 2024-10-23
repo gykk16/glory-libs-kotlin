@@ -1,3 +1,5 @@
+@file:JvmName("NumberExt")
+
 package io.glory.core.util.extensions
 
 import kotlin.math.pow

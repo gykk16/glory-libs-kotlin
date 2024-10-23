@@ -1,13 +1,12 @@
-package io.glory.core.util.string;
+package io.glory.core.util.extensions;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import io.glory.core.util.extensions.StringExtensionsKt;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class StringExtensionsJTest {
+class StringExtensionsKtJTest {
 
     @DisplayName("remove all spaces from string")
     @Test
@@ -17,7 +16,7 @@ class StringExtensionsJTest {
         String expected = "abc";
 
         // when
-        String actual = StringExtensionsKt.removeAllSpaces(input);
+        String actual = StringExt.removeAllSpaces(input);
 
         // then
         assertThat(actual).isEqualTo(expected);
@@ -35,12 +34,12 @@ class StringExtensionsJTest {
         String value16 = "1234567890123456";
 
         // when
-        String mask4 = StringExtensionsKt.mask(value4);
-        String mask6 = StringExtensionsKt.mask(value6);
-        String mask8 = StringExtensionsKt.mask(value8);
-        String mask10 = StringExtensionsKt.mask(value10);
-        String mask12 = StringExtensionsKt.mask(value12);
-        String mask16 = StringExtensionsKt.mask(value16);
+        String mask4 = StringExt.mask(value4);
+        String mask6 = StringExt.mask(value6);
+        String mask8 = StringExt.mask(value8);
+        String mask10 = StringExt.mask(value10);
+        String mask12 = StringExt.mask(value12);
+        String mask16 = StringExt.mask(value16);
 
         // then
         assertThat(mask4).isEqualTo("****");
@@ -58,7 +57,7 @@ class StringExtensionsJTest {
         String empty = "";
 
         // when
-        String mask = StringExtensionsKt.mask(empty);
+        String mask = StringExt.mask(empty);
 
         // then
         assertThat(mask).isEqualTo("****");
@@ -71,7 +70,7 @@ class StringExtensionsJTest {
         String empty = "";
 
         // when
-        assertThatThrownBy(() -> StringExtensionsKt.mask(empty, true))
+        assertThatThrownBy(() -> StringExt.mask(empty, true))
                 // then
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Input string cannot be blank");
