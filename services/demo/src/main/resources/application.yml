@@ -6,17 +6,24 @@ spring:
   profiles:
     default: local
 
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 10MB
+
 core-mvc:
   enabled: true
   features:
-    all: true
-  #    global-controller: true
-  #    log-trace-aop: true
-  #    secured-ip-aop: true
-  #    content-caching-filter: true
-  #    trace-key-filter: true
-  #    log-interceptor: true
-  #    caffeine-cache: true
+    all: false
+    global-controller: true
+    global-exception-handler: true
+    log-trace-aop: true
+    secured-ip-aop: true
+    content-caching-filter: true
+    trace-key-filter: true
+    log-interceptor: true
+    caffeine-cache: true
 
   caffeine:
     cache-policy-map:

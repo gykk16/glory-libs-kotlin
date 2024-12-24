@@ -1,4 +1,4 @@
-package io.glory.coremvc.aop.stopwatch
+package io.glory.core.util
 
 import io.github.oshai.kotlinlogging.KotlinLogging
 import java.time.Duration

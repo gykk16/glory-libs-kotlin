@@ -1,14 +1,15 @@
 package com.example.demo.api
 
 import io.github.oshai.kotlinlogging.KotlinLogging
+import io.glory.coremvc.annotation.LogResponseBody
 import io.glory.coremvc.annotation.LogTrace
 import io.glory.coremvc.annotation.SecuredIp
 import io.glory.coremvc.response.v2.ApiResource
 import org.springframework.data.domain.PageImpl
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
+import org.springframework.web.multipart.MultipartFile
 
 private val logger = KotlinLogging.logger {}
 
@@ -39,6 +40,7 @@ class TestController {
     }
 
     @GetMapping("/api-resource/list")
+    @LogResponseBody
     fun testApiResourceList(): ResponseEntity<ApiResource> {
         val list = listOf(1, 2, 3)
         return ApiResource.ofCollection(collection = list)
@@ -64,6 +66,11 @@ class TestController {
     fun testApiResourcePage(): ResponseEntity<ApiResource> {
         val pageImpl = PageImpl(listOf(1, 2, 3))
         return ApiResource.ofPage(page = pageImpl)
+    }
+
+    @PostMapping("/multipart", consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
+    fun testMultipart(@RequestPart("file") file: MultipartFile): String {
+        return "Test multipart"
     }
 
 }

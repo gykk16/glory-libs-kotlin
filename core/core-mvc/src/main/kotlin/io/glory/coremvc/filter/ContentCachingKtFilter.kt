@@ -2,12 +2,14 @@ package io.glory.coremvc.filter
 
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.glory.coremvc.FILTER_EXCLUDE_PATH
-import io.glory.coremvc.filter.servletwrapperprovider.CachedBodyHttpServletRequest
+import io.glory.coremvc.filter.servletwrapperprovider.CachedBodyHttpServletRequestKt
 import jakarta.servlet.FilterChain
 import jakarta.servlet.ServletException
 import jakarta.servlet.annotation.WebFilter
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
+import org.springframework.core.Ordered
+import org.springframework.core.annotation.Order
 import org.springframework.util.Assert
 import org.springframework.web.filter.OncePerRequestFilter
 import org.springframework.web.util.ContentCachingResponseWrapper
@@ -21,7 +23,8 @@ private val log = KotlinLogging.logger {}
  * <p>This filter is used to cache the request body and response body.</p>
  */
 @WebFilter(filterName = "ContentCachingFilter", urlPatterns = ["/**"])
-class ContentCachingFilter : OncePerRequestFilter() {
+@Order(value = Ordered.HIGHEST_PRECEDENCE)
+class ContentCachingKtFilter : OncePerRequestFilter() {
 
     init {
         log.info { "# ==> ContentCachingFilter initialized" }
@@ -33,7 +36,7 @@ class ContentCachingFilter : OncePerRequestFilter() {
         response: HttpServletResponse,
         filterChain: FilterChain
     ) {
-        val cachedBodyHttpServletRequest = CachedBodyHttpServletRequest(request)
+        val cachedBodyHttpServletRequest = CachedBodyHttpServletRequestKt(request)
         val contentCachingResponse = ContentCachingResponseWrapper(response)
 
         filterChain.doFilter(cachedBodyHttpServletRequest, contentCachingResponse)

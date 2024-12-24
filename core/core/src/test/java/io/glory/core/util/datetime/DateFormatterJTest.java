@@ -131,7 +131,7 @@ class DateFormatterJTest {
     @Test
     void convertToLocalDateTime() throws Exception {
         // given
-        String target = "2024-01-01 12:34:56";
+        String target = "2024-01-01T12:34:56";
         var expected = LocalDateTime.of(2024, 1, 1, 12, 34, 56);
 
         // when
@@ -161,7 +161,7 @@ class DateFormatterJTest {
     void convertToStringFromLocalDateTime() throws Exception {
         // given
         var target = LocalDateTime.of(2024, 1, 1, 12, 34, 56);
-        String expected = "2024-01-01 12:34:56";
+        String expected = "2024-01-01T12:34:56";
 
         // when
         String actual = DateFormatter.toStr(target);

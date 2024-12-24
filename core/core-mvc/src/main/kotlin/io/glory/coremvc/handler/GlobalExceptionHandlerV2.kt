@@ -15,6 +15,7 @@ import org.springframework.core.annotation.Order
 import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.validation.FieldError
+import org.springframework.web.HttpMediaTypeNotSupportedException
 import org.springframework.web.HttpRequestMethodNotSupportedException
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.MissingRequestValueException
@@ -22,6 +23,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.method.annotation.HandlerMethodValidationException
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException
+import org.springframework.web.multipart.MultipartException
+import org.springframework.web.multipart.support.MissingServletRequestPartException
 import org.springframework.web.servlet.resource.NoResourceFoundException
 
 private val logger = KotlinLogging.logger {}
@@ -61,8 +64,10 @@ class GlobalExceptionHandlerV2 {
         MethodArgumentNotValidException::class,
         MissingRequestValueException::class,
         MethodArgumentTypeMismatchException::class,
+        MissingServletRequestPartException::class,
         HandlerMethodValidationException::class,
         HttpMessageNotReadableException::class,
+        MultipartException::class,
         Exception::class
     )
     fun handleException(request: HttpServletRequest, ex: Exception): ResponseEntity<ApiResource> {
@@ -87,12 +92,21 @@ class GlobalExceptionHandlerV2 {
                 handleMissingRequestValueException(request, ex, ErrorCode.INVALID_ARGUMENT)
             }
 
+            is MissingServletRequestPartException -> {
+                handleMissingServletRequestPartException(request, ex, ErrorCode.INVALID_ARGUMENT)
+            }
+
             is HandlerMethodValidationException -> {
                 handleHandlerMethodValidationException(request, ex, ErrorCode.INVALID_ARGUMENT)
             }
 
-            is HttpMessageNotReadableException -> {
+            is HttpMessageNotReadableException,
+            is HttpMediaTypeNotSupportedException -> {
                 handleHttpMessageNotReadableException(request, ex, ErrorCode.NOT_READABLE)
+            }
+
+            is MultipartException -> {
+                handleMultipartException(request, ex, ErrorCode.INVALID_ARGUMENT)
             }
 
             is IllegalArgumentException -> {
@@ -149,6 +163,13 @@ class GlobalExceptionHandlerV2 {
         return createApiResource(request, errorCode, ex, false, detail)
     }
 
+    private fun handleMissingServletRequestPartException(
+        request: HttpServletRequest, ex: MissingServletRequestPartException, errorCode: ResponseCode
+    ): ResponseEntity<ApiResource> {
+        val detail = ex.body.detail ?: errorCode.message
+        return createApiResource(request, errorCode, ex, true, detail)
+    }
+
     private fun handleHandlerMethodValidationException(
         request: HttpServletRequest, ex: HandlerMethodValidationException, errorCode: ResponseCode
     ): ResponseEntity<ApiResource> {
@@ -165,10 +186,16 @@ class GlobalExceptionHandlerV2 {
     }
 
     private fun handleHttpMessageNotReadableException(
-        request: HttpServletRequest, ex: HttpMessageNotReadableException, errorCode: ResponseCode
+        request: HttpServletRequest, ex: Exception, errorCode: ResponseCode
     ): ResponseEntity<ApiResource> {
         val message = ex.message?.split(":")?.get(0) ?: errorCode.message
         return createApiResource(request, errorCode, ex, false, message)
+    }
+
+    private fun handleMultipartException(
+        request: HttpServletRequest, ex: MultipartException, errorCode: ResponseCode
+    ): ResponseEntity<ApiResource> {
+        return createApiResource(request, errorCode, ex)
     }
 
     companion object {

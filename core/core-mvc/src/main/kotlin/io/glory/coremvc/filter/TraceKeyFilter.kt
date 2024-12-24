@@ -26,7 +26,7 @@ const val WARN_PROCESS_TIME_MS = 2_000L
  * <p>This filter is used to generate trace key and log request information.</p>
  */
 @WebFilter(filterName = "TraceKeyFilter", urlPatterns = ["/**"])
-@Order(value = Ordered.HIGHEST_PRECEDENCE)
+@Order(value = Ordered.HIGHEST_PRECEDENCE + 1)
 class TraceKeyFilter(
     private val idGenerator: IdGenerator
 ) : OncePerRequestFilter() {

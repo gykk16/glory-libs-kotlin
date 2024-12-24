@@ -6,10 +6,11 @@ import jakarta.servlet.ServletInputStream
 import java.io.ByteArrayInputStream
 import java.io.IOException
 import java.io.InputStream
+import java.io.OutputStream
 
 private val logger = KotlinLogging.logger {}
 
-class CachedBodyServletInputStream(cachedBody: ByteArray?) : ServletInputStream() {
+class CachedBodyServletInputStreamKt(cachedBody: ByteArray) : ServletInputStream() {
 
     private val cachedBodyInputStream: InputStream = ByteArrayInputStream(cachedBody)
 

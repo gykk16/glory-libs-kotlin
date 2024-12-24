@@ -2,6 +2,7 @@ package io.glory.core.util.datetime
 
 import java.time.Duration
 import java.time.LocalTime
+import java.time.temporal.ChronoUnit
 
 @JvmRecord
 data class LocalTimeRange private constructor(
@@ -43,6 +44,20 @@ data class LocalTimeRange private constructor(
      */
     fun difference(): Duration {
         return Duration.between(start, end)
+    }
+
+    /**
+     * @return the number of hours between [start] and [end] dates
+     */
+    fun differenceInHours(): Long {
+        return ChronoUnit.HOURS.between(start, end)
+    }
+
+    /**
+     * @return the number of minutes between [start] and [end] dates
+     */
+    fun differenceInMin(): Long {
+        return ChronoUnit.MINUTES.between(start, end)
     }
 
 }

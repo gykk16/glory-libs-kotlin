@@ -32,4 +32,19 @@ data class SearchDates @JvmOverloads constructor(
         }
     }
 
+    /**
+     * @return [Period] consisting of the number of years, months, days between two dates.
+     * The start date is inclusive and the end date is exclusive
+     */
+    fun difference(): Period {
+        return Period.between(startDate, endDate)
+    }
+
+    /**
+     * @return the number of days between [startDate] and [endDate] dates
+     */
+    fun searchDays(): Long {
+        return ChronoUnit.DAYS.between(startDate, endDate)
+    }
+
 }

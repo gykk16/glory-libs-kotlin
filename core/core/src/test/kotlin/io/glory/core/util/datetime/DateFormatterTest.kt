@@ -123,7 +123,7 @@ class DateFormatterTest {
     @Test
     fun `convert string to LocalDateTime`(): Unit {
         // given
-        val target = "2024-01-01 12:34:56"
+        val target = "2024-01-01T12:34:56"
         val expected = LocalDateTime.of(2024, 1, 1, 12, 34, 56)
 
         // when
@@ -151,7 +151,7 @@ class DateFormatterTest {
     fun `convert LocalDateTime to String`(): Unit {
         // given
         val target = LocalDateTime.of(2024, 1, 1, 12, 34, 56)
-        val expected = "2024-01-01 12:34:56"
+        val expected = "2024-01-01T12:34:56"
 
         // when
         val actual = target.toStr()

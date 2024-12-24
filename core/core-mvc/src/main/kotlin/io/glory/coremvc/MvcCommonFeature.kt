@@ -19,7 +19,7 @@ enum class MvcCommonFeature(
     GLOBAL_EXCEPTION_HANDLER("global-exception-handler"),
 
     /**
-     * @see io.glory.coremvc.filter.ContentCachingFilter
+     * @see io.glory.coremvc.filter.ContentCachingKtFilter
      */
     CONTENT_CACHING_FILTER("content-caching-filter"),
 

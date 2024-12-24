@@ -27,6 +27,7 @@ private val logger = KotlinLogging.logger {}
  * @see BizRuntimeException
  * @see BizException
  */
+@Suppress("DEPRECATION")
 //@RestControllerAdvice
 //@ConditionalOnFeature(features = [GLOBAL_EXCEPTION_HANDLER])
 //@Order(Ordered.LOWEST_PRECEDENCE)

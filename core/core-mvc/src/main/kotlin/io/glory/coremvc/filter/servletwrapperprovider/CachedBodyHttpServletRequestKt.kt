@@ -6,14 +6,14 @@ import jakarta.servlet.http.HttpServletRequestWrapper
 import org.springframework.util.StreamUtils
 import java.io.*
 
-class CachedBodyHttpServletRequest(request: HttpServletRequest) : HttpServletRequestWrapper(request) {
+class CachedBodyHttpServletRequestKt(request: HttpServletRequest) : HttpServletRequestWrapper(request) {
 
     private val cachedBody: ByteArray = StreamUtils.copyToByteArray(request.inputStream)
     private val parameterMap: Map<String, Array<String>> = request.parameterMap
 
     @Throws(IOException::class)
     override fun getInputStream(): ServletInputStream {
-        return CachedBodyServletInputStream(this.cachedBody)
+        return CachedBodyServletInputStreamKt(this.cachedBody)
     }
 
     @Throws(IOException::class)

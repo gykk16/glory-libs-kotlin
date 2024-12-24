@@ -18,5 +18,5 @@ enum class ErrorCode(
     ILLEGAL_ARGUMENT(406, "인자가 올바르지 않습니다."),
     ILLEGAL_STATE(406, "상태가 올바르지 않습니다."),
     //
-    SERVER_ERROR(500, "서버 오류 입니다."),
+    SERVER_ERROR(500, "일시적인 오류입니다. 잠시 후 다시 시도해주세요."),
 }
