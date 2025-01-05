@@ -22,8 +22,8 @@ private val log = KotlinLogging.logger {}
  * Content caching filter
  * <p>This filter is used to cache the request body and response body.</p>
  */
-@WebFilter(filterName = "ContentCachingFilter", urlPatterns = ["/**"])
-@Order(value = Ordered.HIGHEST_PRECEDENCE)
+//@WebFilter(filterName = "ContentCachingFilter", urlPatterns = ["/**"])
+//@Order(value = Ordered.HIGHEST_PRECEDENCE)
 class ContentCachingKtFilter : OncePerRequestFilter() {
 
     init {
