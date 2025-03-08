@@ -18,9 +18,6 @@ import org.springframework.web.filter.OncePerRequestFilter
 import java.io.IOException
 import java.util.*
 
-private val log = KotlinLogging.logger {}
-const val WARN_PROCESS_TIME_MS = 2_000L
-
 /**
  * Trace key filter
  * <p>This filter is used to generate trace key and log request information.</p>
@@ -30,6 +27,9 @@ const val WARN_PROCESS_TIME_MS = 2_000L
 class TraceKeyFilter(
     private val idGenerator: IdGenerator
 ) : OncePerRequestFilter() {
+
+    private val log = KotlinLogging.logger {}
+    private val warnProcessTimeMs = 2_000L
 
     init {
         log.info { "# ==> TraceKeyFilter initialized" }
@@ -47,7 +47,7 @@ class TraceKeyFilter(
         response.setHeader(X_TRACE_KEY, reqTraceKey)
 
         try {
-            log.info { "# REQ START #######################################################################################################" }
+            log.trace { "# REQ START #######################################################################################################" }
 
             logDefaultParameters(request)
 
@@ -55,14 +55,14 @@ class TraceKeyFilter(
             filterChain.doFilter(request, response)
 
             val requestProcessTime = System.currentTimeMillis() - reqStartTimeMs
-            log.info { "# Process time = ${requestProcessTime}ms" }
+            log.debug { "# Process time = ${requestProcessTime}ms" }
 
-            if (requestProcessTime >= WARN_PROCESS_TIME_MS) {
-                log.warn { "# Process time over ${WARN_PROCESS_TIME_MS}ms" }
+            if (requestProcessTime >= warnProcessTimeMs) {
+                log.warn { "# Process time over ${warnProcessTimeMs}ms" }
             }
 
         } finally {
-            log.info { "# REQ END   #######################################################################################################" }
+            log.trace { "# REQ END   #######################################################################################################" }
             MDC.clear()
         }
     }
@@ -93,20 +93,19 @@ class TraceKeyFilter(
         val clientIp = IpAddrUtil.getClientIp(request)
         val serverIp = IpAddrUtil.getServerIp()
 
-        log.info { "# RequestURI = $method, $requestURI" }
+        log.debug { "# RequestURI = $method, $requestURI" }
 
         referer?.takeIf { it.isNotBlank() }?.let {
-            log.info { "# Referer = $it" }
+            log.debug { "# Referer = $it" }
         }
 
-        log.info { "# Content-Type = $contentType, Accept = $accept, User-Agent = $userAgent" }
+        log.debug { "# Content-Type = $contentType, Accept = $accept, User-Agent = $userAgent" }
 
         authorization?.takeIf { it.isNotBlank() }?.let {
-            log.info { "# Authorization = $it" }
+            log.debug { "# Authorization = $it" }
         }
 
-        log.info { "# ServerIp = $serverIp, ClientIp = $clientIp" }
+        log.debug { "# ServerIp = $serverIp, ClientIp = $clientIp" }
     }
-
 
 }

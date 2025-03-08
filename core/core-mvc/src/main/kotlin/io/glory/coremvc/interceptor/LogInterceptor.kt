@@ -8,8 +8,6 @@ import org.springframework.util.StringUtils
 import org.springframework.web.servlet.HandlerInterceptor
 import java.io.IOException
 
-private val logger = KotlinLogging.logger {}
-
 /**
  * Log interceptor
  * <p>
@@ -17,6 +15,8 @@ private val logger = KotlinLogging.logger {}
  * </p>
  */
 class LogInterceptor : HandlerInterceptor {
+
+    private val logger = KotlinLogging.logger {}
 
     init {
         logger.info { "# ==> LogInterceptor initialized" }
@@ -35,7 +35,7 @@ class LogInterceptor : HandlerInterceptor {
     private fun logRequestParameters() {
         val requestParameters = HttpServletUtil.getRequestParams()
         if (StringUtils.hasText(requestParameters)) {
-            logger.info { "# Request Parameters = $requestParameters" }
+            logger.debug { "# Request Parameters = $requestParameters" }
         }
     }
 
@@ -46,7 +46,7 @@ class LogInterceptor : HandlerInterceptor {
     private fun logRequestBody() {
         val requestBody = HttpServletUtil.getRequestBody()
         if (StringUtils.hasText(requestBody)) {
-            logger.info { "# Request Body = $requestBody" }
+            logger.debug { "# Request Body = $requestBody" }
         }
     }
 

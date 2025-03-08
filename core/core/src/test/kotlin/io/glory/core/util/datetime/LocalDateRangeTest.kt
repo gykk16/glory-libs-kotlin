@@ -67,6 +67,20 @@ class LocalDateRangeTest {
     }
 
     @Test
+    fun `differenceInDays`(): Unit {
+        // given
+        val expectedDays = 40L
+        val targetDate = start.plusDays(expectedDays)
+        val range = LocalDateRange(start, targetDate)
+
+        // when
+        val differenceInDays = range.differenceInDays()
+
+        // then
+        assertThat(differenceInDays).isEqualTo(expectedDays)
+    }
+
+    @Test
     fun `when end is before start throws IllegalArgumentException`(): Unit {
         // given
         val invalidStart = end.plusDays(1)
